@@ -10,23 +10,59 @@ namespace BigInteger
     /// </summary>
     public struct BigInteger
     {
+        #region Fields
+
+        /// <summary>
+        /// The negative sign.
+        /// </summary>
+        private const char NegativeSign = '-';
+
+        /// <summary>
+        /// The contents.
+        /// </summary>
         private LinkedList<byte> _contents;
+
+        #endregion Fields
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BigInteger"/> struct.
+        /// </summary>
+        /// <param name="numString">The number string.</param>
         public BigInteger(string numString)
             : this()
         {
-            BigInteger.TryParse(numString, out LinkedList<byte> contents);
-            this._contents = contents;
+            var success = BigInteger.TryParse(numString, out var contents, out var isNegative);
+
+            if (success == true)
+            {
+                this._contents = contents;
+                this._isNegative = isNegative;
+            }
         }
 
-        private BigInteger(LinkedList<byte> contents)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BigInteger" /> struct.
+        /// </summary>
+        /// <param name="contents">The contents.</param>
+        /// <param name="isNegative">Is negative.</param>
+        private BigInteger(LinkedList<byte> contents, bool isNegative)
         {
             this._contents = contents;
+            this._isNegative = isNegative;
         }
 
         #endregion Constructors
+
+        #region Properties
+
+        /// <summary>
+        /// Indicates whether this instance is negative.
+        /// </summary>
+        public bool _isNegative { get; private set; }
+
+        #endregion Properties
 
         /// <summary>
         /// Converts the string representation of a number into digits.
@@ -36,10 +72,10 @@ namespace BigInteger
         /// <returns>True if string was converted successfully; otherwise, false.</returns>
         public static bool TryParse(string numString, out BigInteger bigInt)
         {
-            var success = BigInteger.TryParse(numString, out LinkedList<byte> contents);
+            var success = BigInteger.TryParse(numString, out var contents, out var isNegative);
 
             // Create the new struct object:
-            bigInt = new BigInteger(contents);
+            bigInt = new BigInteger(contents, isNegative);
 
             return success;
         }
@@ -52,7 +88,8 @@ namespace BigInteger
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            if (this._contents == null || this._contents.Any() == false)
+            if (this._contents == null
+                || this._contents.Any() == false)
             {
                 return "0";
             }
@@ -76,14 +113,27 @@ namespace BigInteger
         /// </summary>
         /// <param name="numString">A string containing a number to convert.</param>
         /// <param name="contents">A set of digits.</param>
+        /// <param name="isNegative">Is negative.</param>
         /// <returns>True if string was converted successfully; otherwise, false.</returns>
-        private static bool TryParse(string numString, out LinkedList<byte> contents)
+        private static bool TryParse(string numString, out LinkedList<byte> contents, out bool isNegative)
         {
             contents = new LinkedList<byte>();
+            isNegative = default(bool);
 
             if (string.IsNullOrWhiteSpace(numString) == true)
             {
                 return false;
+            }
+
+            if (numString[0] == BigInteger.NegativeSign)
+            {
+                if (numString.Length == 1)
+                {
+                    return false;
+                }
+
+                isNegative = true;
+                numString = string.Concat(numString.Skip(1));
             }
 
             foreach (var digit in numString)

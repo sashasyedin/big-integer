@@ -63,6 +63,26 @@ namespace BigInteger.Tests
         /// Tests the operation under the specified circumstances.
         /// </summary>
         [TestMethod]
+        public void TryParse_WhenValidStringArgumentPassed_AndMinusSignIsUsed_ExpectSuccess_AndNumberIsNegative()
+        {
+            // Arrange:
+            this._numString = "-789789";
+            this.Stub();
+
+            // Act:
+            var actual = this.Act();
+
+            // Assert:
+            Assert.IsTrue(actual);
+            Assert.IsTrue(this._bigInt._isNegative);
+            Assert.AreEqual("789789", this._bigInt.ToString());
+            this.AssertCore();
+        }
+
+        /// <summary>
+        /// Tests the operation under the specified circumstances.
+        /// </summary>
+        [TestMethod]
         public void TryParse_UnderValidCircumstances_ExpectSuccess()
         {
             // Arrange:
