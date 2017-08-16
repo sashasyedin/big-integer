@@ -1,2 +1,7 @@
 language: csharp
-solution: BigInteger.sln
+mono: none
+dotnet: 1.1.1
+dist: trusty
+script:
+  - dotnet restore
+  - dotnet test ./BigInteger.Tests
