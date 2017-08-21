@@ -3,17 +3,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace BigInteger.Tests
 {
     /// <summary>
-    /// Tests the TryParse method.
+    /// Tests the Constructors.
     /// </summary>
     [TestClass]
-    public class BigInteger_TryParse : UnitTestContainer
+    public class BigInteger_Constructors : UnitTestContainer
     {
         #region Fields
-
-        /// <summary>
-        /// The BigInteger argument.
-        /// </summary>
-        private BigInteger _bigInt;
 
         /// <summary>
         /// The string argument.
@@ -32,7 +27,6 @@ namespace BigInteger.Tests
         {
             base.TestInitialise();
 
-            this._bigInt = default(BigInteger);
             this._numString = string.Empty;
         }
 
@@ -44,7 +38,7 @@ namespace BigInteger.Tests
         /// Tests the operation under the specified circumstances.
         /// </summary>
         [TestMethod]
-        public void TryParse_WhenStringArgumentIsNull_ExpectParsingFailed()
+        public void Constructors_WhenStringArgumentIsNull_ExpectParsingFailed()
         {
             // Arrange:
             this._numString = null;
@@ -54,8 +48,7 @@ namespace BigInteger.Tests
             var actual = this.Act();
 
             // Assert:
-            Assert.IsFalse(actual);
-            Assert.AreEqual("0", this._bigInt.ToString());
+            Assert.AreEqual("0", actual.ToString());
             this.AssertCore();
         }
 
@@ -63,27 +56,7 @@ namespace BigInteger.Tests
         /// Tests the operation under the specified circumstances.
         /// </summary>
         [TestMethod]
-        public void TryParse_WhenValidStringArgumentPassed_AndMinusSignIsUsed_ExpectSuccess_AndNumberIsNegative()
-        {
-            // Arrange:
-            this._numString = "-789789";
-            this.Stub();
-
-            // Act:
-            var actual = this.Act();
-
-            // Assert:
-            Assert.IsTrue(actual);
-            Assert.IsTrue(this._bigInt.IsNegative);
-            Assert.AreEqual("789789", this._bigInt.ToString());
-            this.AssertCore();
-        }
-
-        /// <summary>
-        /// Tests the operation under the specified circumstances.
-        /// </summary>
-        [TestMethod]
-        public void TryParse_UnderValidCircumstances_ExpectSuccess()
+        public void Constructors_UnderValidCircumstances_ExpectSuccess()
         {
             // Arrange:
             this._numString = "12345";
@@ -93,8 +66,8 @@ namespace BigInteger.Tests
             var actual = this.Act();
 
             // Assert:
-            Assert.IsTrue(actual);
-            Assert.AreEqual(this._numString, this._bigInt.ToString());
+            Assert.IsFalse(actual.IsNegative);
+            Assert.AreEqual(this._numString, actual.ToString());
             this.AssertCore();
         }
 
@@ -126,9 +99,9 @@ namespace BigInteger.Tests
         /// Encapsulates the execution of the test.
         /// </summary>
         /// <returns>The result of the test execution</returns>
-        private bool Act()
+        private BigInteger Act()
         {
-            return BigInteger.TryParse(this._numString, out this._bigInt);
+            return new BigInteger(this._numString);
         }
 
         #endregion Private methods

@@ -38,7 +38,7 @@ namespace BigInteger
             if (success == true)
             {
                 this._contents = contents;
-                this._isNegative = isNegative;
+                this.IsNegative = isNegative;
             }
         }
 
@@ -50,7 +50,7 @@ namespace BigInteger
         private BigInteger(LinkedList<byte> contents, bool isNegative)
         {
             this._contents = contents;
-            this._isNegative = isNegative;
+            this.IsNegative = isNegative;
         }
 
         #endregion Constructors
@@ -60,7 +60,7 @@ namespace BigInteger
         /// <summary>
         /// Indicates whether this instance is negative.
         /// </summary>
-        public bool _isNegative { get; private set; }
+        public bool IsNegative { get; private set; }
 
         #endregion Properties
 
