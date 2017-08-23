@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Dictionary>
+    <Acronyms>
+        <CasingExceptions>
+            <Acronym>JSON</Acronym>
+        </CasingExceptions>
+    </Acronyms>
+    <Words>
+        <Recognized>
+            <Word>json</Word>
+        </Recognized>
+    </Words>
+</Dictionary>

@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="BigInt Rule Set" Description="Custom Rule Set" ToolsVersion="14.0">
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1005" Action="Warning" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp" RuleNamespace="Microsoft.CodeAnalysis.CSharp">
+    <Rule Id="CS1570" Action="None" />
+    <Rule Id="CS1574" Action="None" />
+    <Rule Id="CS1591" Action="None" />
+    <Rule Id="CS1658" Action="None" />
+    <Rule Id="CS1723" Action="None" />
+    <Rule Id="CS8019" Action="None" />
+    <Rule Id="CS8020" Action="Warning" />
+    <Rule Id="CS8040" Action="Warning" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+    <Rule Id="IDE0003" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0000" Action="Warning" />
+    <Rule Id="SA1003" Action="None" />
+    <Rule Id="SA1009" Action="None" />
+    <Rule Id="SA1025" Action="None" />
+    <Rule Id="SA1028" Action="None" />
+    <Rule Id="SA1107" Action="None" />
+    <Rule Id="SA1118" Action="None" />
+    <Rule Id="SA1119" Action="None" />
+    <Rule Id="SA1123" Action="None" />
+    <Rule Id="SA1124" Action="None" />
+    <Rule Id="SA1129" Action="None" />
+    <Rule Id="SA1132" Action="None" />
+    <Rule Id="SA1133" Action="None" />
+    <Rule Id="SA1200" Action="None" />
+    <Rule Id="SA1208" Action="None" />
+    <Rule Id="SA1210" Action="None" />
+    <Rule Id="SA1211" Action="None" />
+    <Rule Id="SA1300" Action="None" />
+    <Rule Id="SA1303" Action="None" />
+    <Rule Id="SA1309" Action="None" />
+    <Rule Id="SA1312" Action="None" />
+    <Rule Id="SA1401" Action="None" />
+    <Rule Id="SA1500" Action="None" />
+    <Rule Id="SA1515" Action="None" />
+    <Rule Id="SA1600" Action="Error" />
+    <Rule Id="SA1623" Action="None" />
+    <Rule Id="SA1633" Action="None" />
+    <Rule Id="SA1639" Action="Warning" />
+    <Rule Id="SA1642" Action="None" />
+  </Rules>
+</RuleSet>

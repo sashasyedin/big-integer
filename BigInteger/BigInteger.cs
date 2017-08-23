@@ -68,7 +68,7 @@ namespace BigInteger
         /// Converts the string representation of a number into digits.
         /// </summary>
         /// <param name="numString">A string containing a number to convert.</param>
-        /// <param name="contents">A set of digits.</param>
+        /// <param name="bigInt">The big int.</param>
         /// <returns>True if string was converted successfully; otherwise, false.</returns>
         public static bool TryParse(string numString, out BigInteger bigInt)
         {
