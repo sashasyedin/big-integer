@@ -64,6 +64,100 @@ namespace BigInteger
 
         #endregion Properties
 
+        #region Operators
+
+        /// <summary>
+        /// Implements the operator +.
+        /// </summary>
+        /// <param name="lOperand">The left operand.</param>
+        /// <param name="rOperand">The right operand.</param>
+        /// <returns>The result of the operator.</returns>
+        public static BigInteger operator +(BigInteger lOperand, BigInteger rOperand)
+        {
+            if (lOperand.IsNegative || rOperand.IsNegative)
+            {
+                throw new NotImplementedException();
+            }
+
+            // Check if operand equals zero:
+            var lOperandZero = !lOperand._contents?.Any() ?? true;
+            var rOperandZero = !rOperand._contents?.Any() ?? true;
+
+            if (lOperandZero == true
+                && rOperandZero == true)
+            {
+                return new BigInteger();
+            }
+            else if (lOperandZero == true)
+            {
+                return rOperand;
+            }
+            else if (rOperandZero == true)
+            {
+                return lOperand;
+            }
+
+            // Equalize the number of digits:
+            var lOperandSize = lOperand._contents.Count;
+            var rOperandSize = rOperand._contents.Count;
+
+            Helpers.RepeatAction(
+                Math.Abs(lOperandSize - rOperandSize),
+                () =>
+                {
+                    if (lOperandSize > rOperandSize)
+                    {
+                        rOperand._contents.AddFirst(0);
+                    }
+                    else if (rOperandSize > lOperandSize)
+                    {
+                        lOperand._contents.AddFirst(0);
+                    }
+                });
+
+            // Addition process:
+            var useCarry = false;
+            var result = string.Empty;
+
+            for (int i = lOperand._contents.Count - 1; i >= 0; i--)
+            {
+                var item1 = lOperand._contents.ElementAt(i);
+                var item2 = rOperand._contents.ElementAt(i);
+                var sum = item1 + item2 + (useCarry ? 1 : 0);
+
+                useCarry = false;
+
+                if (sum > 9)
+                {
+                    useCarry = true;
+                    sum -= 10;
+                }
+
+                result = sum.ToString() + result;
+            }
+
+            if (useCarry == true)
+            {
+                result = "1" + result;
+            }
+
+            return new BigInteger(result);
+        }
+
+        /// <summary>
+        /// Implements the operator ++.
+        /// </summary>
+        /// <param name="operand">The operand.</param>
+        /// <returns>The result of the operator.</returns>
+        public static BigInteger operator ++(BigInteger operand)
+        {
+            return operand + new BigInteger("1");
+        }
+
+        #endregion Operators
+
+        #region Public Methods
+
         /// <summary>
         /// Converts the string representation of a number into digits.
         /// </summary>
@@ -105,6 +199,8 @@ namespace BigInteger
         }
 
         #endregion Overrides
+
+        #endregion Public Methods
 
         #region Private Methods
 
