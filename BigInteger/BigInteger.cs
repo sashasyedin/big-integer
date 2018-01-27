@@ -74,18 +74,18 @@ namespace BigInteger
         /// <returns>The result of the operator.</returns>
         public static BigInteger operator +(BigInteger lOperand, BigInteger rOperand)
         {
-            if (lOperand.IsNegative || rOperand.IsNegative)
+            if (lOperand.IsNegative ^ rOperand.IsNegative)
                 throw new NotImplementedException();
-
+            
             // Check if operand equals zero:
             var lOperandZero = !lOperand._contents?.Any() ?? true;
             var rOperandZero = !rOperand._contents?.Any() ?? true;
             
-            if (lOperandZero == true && rOperandZero == true)
+            if (lOperandZero && rOperandZero)
                 return new BigInteger();
-            else if (lOperandZero == true)
+            else if (lOperandZero)
                 return rOperand;
-            else if (rOperandZero == true)
+            else if (rOperandZero)
                 return lOperand;
             
             // Equalize the number of digits:
@@ -123,9 +123,12 @@ namespace BigInteger
                 result = sum.ToString() + result;
             }
 
-            if (useCarry == true)
+            if (useCarry)
                 result = "1" + result;
-
+            
+            if (lOperand.IsNegative && rOperand.IsNegative)
+                result = NegativeSign + result;
+            
             return new BigInteger(result);
         }
 
@@ -169,12 +172,15 @@ namespace BigInteger
         {
             if (this._contents == null || this._contents.Any() == false)
                 return "0";
-            
+
             var sb = new StringBuilder();
+
+            if (this.IsNegative)
+                sb.Append(NegativeSign);
 
             foreach (var digit in this._contents)
                 sb.Append(digit.ToString());
-            
+
             return sb.ToString();
         }
 
@@ -196,10 +202,10 @@ namespace BigInteger
             contents = new LinkedList<byte>();
             isNegative = default(bool);
 
-            if (string.IsNullOrWhiteSpace(numString) == true)
+            if (string.IsNullOrWhiteSpace(numString))
                 return false;
 
-            if (numString[0] == BigInteger.NegativeSign)
+            if (numString[0] == NegativeSign)
             {
                 if (numString.Length == 1)
                     return false;

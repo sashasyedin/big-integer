@@ -75,7 +75,7 @@ namespace BigInteger.Tests
             // Assert:
             Assert.IsTrue(actual);
             Assert.IsTrue(this._bigInt.IsNegative);
-            Assert.AreEqual("789789", this._bigInt.ToString());
+            Assert.AreEqual("-789789", this._bigInt.ToString());
             this.AssertCore();
         }
 

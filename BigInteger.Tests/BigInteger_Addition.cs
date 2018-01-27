@@ -44,7 +44,26 @@ namespace BigInteger.Tests
         /// Tests the operation under the specified circumstances.
         /// </summary>
         [TestMethod]
-        public void Addition_UnderValidCircumstances_ExpectSuccess()
+        public void Addition_UnderValidCircumstances_WithCarrying_ExpectSuccess()
+        {
+            // Arrange:
+            this._lOperand = new BigInteger("550");
+            this._rOperand = new BigInteger("550");
+            this.Stub();
+
+            // Act:
+            var actual = this.Act();
+
+            // Assert:
+            Assert.AreEqual("1100", actual.ToString());
+            this.AssertCore();
+        }
+        
+        /// <summary>
+        /// Tests the operation under the specified circumstances.
+        /// </summary>
+        [TestMethod]
+        public void Addition_UnderValidCircumstances_NoCarrying_ExpectSuccess()
         {
             // Arrange:
             this._lOperand = new BigInteger("222");
@@ -56,6 +75,26 @@ namespace BigInteger.Tests
 
             // Assert:
             Assert.AreEqual("333", actual.ToString());
+            this.AssertCore();
+        }
+        
+        /// <summary>
+        /// Tests the operation under the specified circumstances.
+        /// </summary>
+        [TestMethod]
+        public void Addition_UnderValidCircumstances_BothNegative_ExpectSuccess()
+        {
+            // Arrange:
+            this._lOperand = new BigInteger("-222");
+            this._rOperand = new BigInteger("-555");
+            this.Stub();
+
+            // Act:
+            var actual = this.Act();
+
+            // Assert:
+            Assert.IsTrue(actual.IsNegative);
+            Assert.AreEqual("-777", actual.ToString());
             this.AssertCore();
         }
 
