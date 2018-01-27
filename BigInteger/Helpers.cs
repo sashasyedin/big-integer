@@ -14,10 +14,8 @@ namespace BigInteger
         /// <param name="action">The action.</param>
         public static void RepeatAction(int repeatCount, Action action)
         {
-            for (int i = 0; i < repeatCount; i++)
-            {
+            for (var i = 0; i < repeatCount; i++)
                 action();
-            }
         }
     }
 }

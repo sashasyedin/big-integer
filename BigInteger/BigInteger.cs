@@ -20,7 +20,7 @@ namespace BigInteger
         /// <summary>
         /// The contents.
         /// </summary>
-        private LinkedList<byte> _contents;
+        private readonly LinkedList<byte> _contents;
 
         #endregion Fields
 
@@ -35,11 +35,11 @@ namespace BigInteger
         {
             var success = BigInteger.TryParse(numString, out var contents, out var isNegative);
 
-            if (success == true)
-            {
-                this._contents = contents;
-                this.IsNegative = isNegative;
-            }
+            if (success == false)
+                return;
+
+            this._contents = contents;
+            this.IsNegative = isNegative;
         }
 
         /// <summary>
@@ -75,28 +75,19 @@ namespace BigInteger
         public static BigInteger operator +(BigInteger lOperand, BigInteger rOperand)
         {
             if (lOperand.IsNegative || rOperand.IsNegative)
-            {
                 throw new NotImplementedException();
-            }
 
             // Check if operand equals zero:
             var lOperandZero = !lOperand._contents?.Any() ?? true;
             var rOperandZero = !rOperand._contents?.Any() ?? true;
-
-            if (lOperandZero == true
-                && rOperandZero == true)
-            {
+            
+            if (lOperandZero == true && rOperandZero == true)
                 return new BigInteger();
-            }
             else if (lOperandZero == true)
-            {
                 return rOperand;
-            }
             else if (rOperandZero == true)
-            {
                 return lOperand;
-            }
-
+            
             // Equalize the number of digits:
             var lOperandSize = lOperand._contents.Count;
             var rOperandSize = rOperand._contents.Count;
@@ -106,20 +97,16 @@ namespace BigInteger
                 () =>
                 {
                     if (lOperandSize > rOperandSize)
-                    {
                         rOperand._contents.AddFirst(0);
-                    }
                     else if (rOperandSize > lOperandSize)
-                    {
                         lOperand._contents.AddFirst(0);
-                    }
                 });
 
             // Addition process:
             var useCarry = false;
             var result = string.Empty;
 
-            for (int i = lOperand._contents.Count - 1; i >= 0; i--)
+            for (var i = lOperand._contents.Count - 1; i >= 0; i--)
             {
                 var item1 = lOperand._contents.ElementAt(i);
                 var item2 = rOperand._contents.ElementAt(i);
@@ -137,9 +124,7 @@ namespace BigInteger
             }
 
             if (useCarry == true)
-            {
                 result = "1" + result;
-            }
 
             return new BigInteger(result);
         }
@@ -182,19 +167,14 @@ namespace BigInteger
         /// <returns>A string that represents the current object.</returns>
         public override string ToString()
         {
-            if (this._contents == null
-                || this._contents.Any() == false)
-            {
+            if (this._contents == null || this._contents.Any() == false)
                 return "0";
-            }
-
+            
             var sb = new StringBuilder();
 
             foreach (var digit in this._contents)
-            {
                 sb.Append(digit.ToString());
-            }
-
+            
             return sb.ToString();
         }
 
@@ -217,25 +197,19 @@ namespace BigInteger
             isNegative = default(bool);
 
             if (string.IsNullOrWhiteSpace(numString) == true)
-            {
                 return false;
-            }
 
             if (numString[0] == BigInteger.NegativeSign)
             {
                 if (numString.Length == 1)
-                {
                     return false;
-                }
 
                 isNegative = true;
                 numString = string.Concat(numString.Skip(1));
             }
 
             foreach (var digit in numString)
-            {
                 contents.AddLast(Convert.ToByte(digit - '0'));
-            }
 
             return true;
         }
