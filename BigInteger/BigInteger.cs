@@ -8,7 +8,7 @@ namespace BigInteger
     /// <summary>
     /// Represents a large integer type.
     /// </summary>
-    public struct BigInteger
+    public struct BigInteger : IComparable<BigInteger>
     {
         #region Fields
 
@@ -141,6 +141,26 @@ namespace BigInteger
         {
             return operand + new BigInteger("1");
         }
+        
+        public static bool operator <(BigInteger lOperand, BigInteger rOperand)
+        {
+            return lOperand.CompareTo(rOperand) < 0;
+        }
+        
+        public static bool operator >(BigInteger lOperand, BigInteger rOperand)
+        {
+            return lOperand.CompareTo(rOperand) > 0;
+        }
+        
+        public static bool operator ==(BigInteger lOperand, BigInteger rOperand)
+        {
+            return lOperand.CompareTo(rOperand) == 0;
+        }
+        
+        public static bool operator !=(BigInteger lOperand, BigInteger rOperand)
+        {
+            return lOperand.CompareTo(rOperand) != 0;
+        }
 
         #endregion Operators
 
@@ -160,6 +180,60 @@ namespace BigInteger
             bigInt = new BigInteger(contents, isNegative);
 
             return success;
+        }
+        
+        public int CompareTo(BigInteger bigInt)
+        {
+            var bigIntCopy = this;
+            var converse = default(bool);
+
+            // Check if a number is negative:
+            if (bigIntCopy.IsNegative && bigInt.IsNegative == false)
+                return -1;
+            
+            if (bigIntCopy.IsNegative == false && bigInt.IsNegative)
+                return 1;
+
+            if (bigIntCopy.IsNegative && bigInt.IsNegative)
+                converse = true;
+
+            // Equalize the number of digits:
+            var lOperandSize = bigIntCopy._contents.Count;
+            var rOperandSize = bigInt._contents.Count;
+
+            Helpers.RepeatAction(
+                Math.Abs(lOperandSize - rOperandSize),
+                () =>
+                {
+                    if (lOperandSize > rOperandSize)
+                        bigInt._contents.AddFirst(0);
+                    else if (rOperandSize > lOperandSize)
+                        bigIntCopy._contents.AddFirst(0);
+                });
+
+            for (var i = 0; i < bigIntCopy._contents.Count; i++)
+            {
+                var item1 = bigIntCopy._contents.ElementAt(i);
+                var item2 = bigInt._contents.ElementAt(i);
+
+                if (item1 < item2)
+                {
+                    if (converse)
+                        return 1;
+
+                    return -1;
+                }
+
+                if (item1 > item2)
+                {
+                    if (converse)
+                        return -1;
+
+                    return 1;
+                }
+            }
+
+            return 0;
         }
 
         #region Overrides
