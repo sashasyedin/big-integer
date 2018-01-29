@@ -55,6 +55,7 @@ namespace BigInteger.Tests
             var actual = this.Act();
 
             // Assert:
+            Assert.IsTrue(this._bigInt1 > this._bigInt2);
             Assert.AreEqual(1, actual);
             this.AssertCore();
         }
@@ -76,6 +77,7 @@ namespace BigInteger.Tests
             // Assert:
             Assert.IsTrue(this._bigInt1.IsNegative);
             Assert.IsTrue(this._bigInt2.IsNegative);
+            Assert.IsTrue(this._bigInt1 > this._bigInt2);
             Assert.AreEqual(1, actual);
             this.AssertCore();
         }
@@ -96,6 +98,7 @@ namespace BigInteger.Tests
 
             // Assert:
             Assert.IsTrue(this._bigInt2.IsNegative);
+            Assert.IsTrue(this._bigInt1 > this._bigInt2);
             Assert.AreEqual(1, actual);
             this.AssertCore();
         }
@@ -115,6 +118,10 @@ namespace BigInteger.Tests
             var actual = this.Act();
 
             // Assert:
+            Assert.IsTrue(this._bigInt1 < this._bigInt2);
+            Assert.IsTrue(this._bigInt1 != this._bigInt2);
+            Assert.IsFalse(this._bigInt1 > this._bigInt2);
+            Assert.IsFalse(this._bigInt1 == this._bigInt2);
             Assert.AreEqual(-1, actual);
             this.AssertCore();
         }
@@ -136,6 +143,8 @@ namespace BigInteger.Tests
             // Assert:
             Assert.IsTrue(this._bigInt1.IsNegative);
             Assert.IsTrue(this._bigInt2.IsNegative);
+            Assert.IsTrue(this._bigInt1 < this._bigInt2);
+            Assert.IsFalse(this._bigInt1 > this._bigInt2);
             Assert.AreEqual(-1, actual);
             this.AssertCore();
         }
@@ -156,6 +165,8 @@ namespace BigInteger.Tests
 
             // Assert:
             Assert.IsTrue(this._bigInt1.IsNegative);
+            Assert.IsTrue(this._bigInt1 < this._bigInt2);
+            Assert.IsFalse(this._bigInt1 > this._bigInt2);
             Assert.AreEqual(-1, actual);
             this.AssertCore();
         }
@@ -175,6 +186,8 @@ namespace BigInteger.Tests
             var actual = this.Act();
 
             // Assert:
+            Assert.IsTrue(this._bigInt1 == this._bigInt2);
+            Assert.IsFalse(this._bigInt1 != this._bigInt2);
             Assert.AreEqual(0, actual);
             this.AssertCore();
         }
@@ -196,6 +209,8 @@ namespace BigInteger.Tests
             // Assert:
             Assert.IsTrue(this._bigInt1.IsNegative);
             Assert.IsTrue(this._bigInt2.IsNegative);
+            Assert.IsTrue(this._bigInt1 == this._bigInt2);
+            Assert.IsFalse(this._bigInt1 != this._bigInt2);
             Assert.AreEqual(0, actual);
             this.AssertCore();
         }

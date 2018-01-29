@@ -142,21 +142,45 @@ namespace BigInteger
             return operand + new BigInteger("1");
         }
         
+        /// <summary>
+        /// Implements the operator "Less Than".
+        /// </summary>
+        /// <param name="lOperand">The left operand.</param>
+        /// <param name="rOperand">The right operand.</param>
+        /// <returns>True if the first operand is less than the second, false otherwise.</returns>
         public static bool operator <(BigInteger lOperand, BigInteger rOperand)
         {
             return lOperand.CompareTo(rOperand) < 0;
         }
         
+        /// <summary>
+        /// Implements the operator "Greater Than".
+        /// </summary>
+        /// <param name="lOperand">The left operand.</param>
+        /// <param name="rOperand">The right operand.</param>
+        /// <returns>True if the first operand is greater than the second, false otherwise.</returns>
         public static bool operator >(BigInteger lOperand, BigInteger rOperand)
         {
             return lOperand.CompareTo(rOperand) > 0;
         }
         
+        /// <summary>
+        /// Implements the equality operator.
+        /// </summary>
+        /// <param name="lOperand">The left operand.</param>
+        /// <param name="rOperand">The right operand.</param>
+        /// <returns>True if the values of its operands are equal, false otherwise.</returns>
         public static bool operator ==(BigInteger lOperand, BigInteger rOperand)
         {
             return lOperand.CompareTo(rOperand) == 0;
         }
         
+        /// <summary>
+        /// Implements the inequality operator.
+        /// </summary>
+        /// <param name="lOperand">The left operand.</param>
+        /// <param name="rOperand">The right operand.</param>
+        /// <returns>False if its operands are equal, true otherwise.</returns>
         public static bool operator !=(BigInteger lOperand, BigInteger rOperand)
         {
             return lOperand.CompareTo(rOperand) != 0;
@@ -182,6 +206,15 @@ namespace BigInteger
             return success;
         }
         
+        /// <summary>
+        /// Implements the IComparable interface for this instance.
+        /// </summary>
+        /// <param name="bigInt">The other instance.</param>
+        /// <returns>
+        /// If this instance is greater than the other instance, it returns 1.
+        /// If this instance is less than the other instance, it returns -1.
+        /// If the two instances are equal, it returns 0.
+        /// </returns>
         public int CompareTo(BigInteger bigInt)
         {
             var bigIntCopy = this;
